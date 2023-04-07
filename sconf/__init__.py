@@ -1,4 +1,5 @@
 import os
+import sys
 import json
 
 
@@ -8,11 +9,11 @@ class Config(object):
             cls._instance = super().__new__(cls)
         return cls._instance
 
-    def __init__(self):
+    def __init__(self, filename="config.json"):
         cls = type(self)
         if not hasattr(cls, "_init"):
-            context_root = os.path.dirname(os.path.abspath(__file__))
-            config_file = f"{context_root}/config.json"
+            context_root = os.path.dirname(os.path.abspath(sys.modules['__main__'].__file__))
+            config_file = f"{context_root}/{filename}"
 
             with open(config_file, encoding="UTF-8") as json_file:
                 self.json_data = json.load(json_file)
